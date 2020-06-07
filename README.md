@@ -30,15 +30,16 @@ deepspeech --model deepspeech-0.7.3-models.tflite --scorer deepspeech-0.7.3-mode
 
 To try live transcription from a microphone, plug in a USB microphone.
 
-Change alsa.conf file so the microphone (device 1) is the default ALSA device.
+Change alsa.conf file so the microphone (device 2) is the default ALSA device. The latest version of Raspbian
+as of June 2020 has two soundcards. One for the built-in HDMI audio and one for the built-in headphone jack.
 
 ```
 sudo nano /usr/share/alsa/alsa.conf
 ```
 
 ```
-defaults.ctl.card 1
-defaults.pcm.card 1
+defaults.ctl.card 2
+defaults.pcm.card 2
 ```
 
 Install DeepSpeech examples including the microphone example and dependencies.
@@ -46,7 +47,7 @@ Install DeepSpeech examples including the microphone example and dependencies.
 ```
 git clone https://github.com/mozilla/DeepSpeech-examples
 pip3 install halo webrtcvad --upgrade
-python3 DeepSpeech-examples/mic_vad_streaming/mic_vad_streaming.py -m deepspeech-0.7.3-models.tflite -s deepspeech-0.7.3-models.scorer
+python3 DeepSpeech-examples/mic_vad_streaming/mic_vad_streaming.py --device 1 -m deepspeech-0.7.3-models.tflite -s deepspeech-0.7.3-models.scorer
 ```
 
 ## Links
