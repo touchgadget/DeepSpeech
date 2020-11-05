@@ -1,29 +1,29 @@
 # DeepSpeech
-Install Mozilla DeepSpeech 0.8.2 on a Raspberry Pi 4
+Install Mozilla DeepSpeech 0.9.1 on a Raspberry Pi 4
 
 ## Prerequisites
 * Raspberry Pi 4 (3+ slower but might be OK)
 * Raspbian Lite buster
 
-## Install DeepSpeech 0.8.2
+## Install DeepSpeech 0.9.1
 ```
 sudo apt install git python3-pip python3-scipy python3-numpy python3-pyaudio libatlas3-base
 pip3 install deepspeech --upgrade
 mkdir ~/dspeech
 cd ~/dspeech
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.8.2/deepspeech-0.8.2-models.tflite
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.8.2/deepspeech-0.8.2-models.scorer
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.8.2/audio-0.8.2.tar.gz
-tar xvf audio-0.8.2.tar.gz
+curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.9.1/deepspeech-0.9.1-models.tflite
+curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.9.1/deepspeech-0.9.1-models.scorer
+curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.9.1/audio-0.9.1.tar.gz
+tar xvf audio-0.9.1.tar.gz
 source ~/.profile
 ```
 
 Transcribe three test files.
 
 ```
-deepspeech --model deepspeech-0.8.2-models.tflite --scorer deepspeech-0.8.2-models.scorer --audio audio/2830-3980-0043.wav
-deepspeech --model deepspeech-0.8.2-models.tflite --scorer deepspeech-0.8.2-models.scorer --audio audio/4507-16021-0012.wav
-deepspeech --model deepspeech-0.8.2-models.tflite --scorer deepspeech-0.8.2-models.scorer --audio audio/8455-210777-0068.wav
+deepspeech --model deepspeech-0.9.1-models.tflite --scorer deepspeech-0.9.1-models.scorer --audio audio/2830-3980-0043.wav
+deepspeech --model deepspeech-0.9.1-models.tflite --scorer deepspeech-0.9.1-models.scorer --audio audio/4507-16021-0012.wav
+deepspeech --model deepspeech-0.9.1-models.tflite --scorer deepspeech-0.9.1-models.scorer --audio audio/8455-210777-0068.wav
 ```
 
 ## Live transcription from a microphone
@@ -33,13 +33,17 @@ To try live transcription from a microphone, plug in a USB microphone.
 Change alsa.conf file so the microphone (device 2) is the default ALSA device. The latest version of Raspbian
 as of June 2020 has two soundcards. One for the built-in HDMI audio and one for the built-in headphone jack.
 
+Change alsa.conf file so the microphone (device 3) is the default ALSA device.
+The latest version of the Raspberry Pi OS (formerly known as Raspbian) as of
+Nov 2020 has three soundcards so the USB microphone is the fourth device.
+
 ```
 sudo nano /usr/share/alsa/alsa.conf
 ```
 
 ```
-defaults.ctl.card 2
-defaults.pcm.card 2
+defaults.ctl.card 3
+defaults.pcm.card 3
 ```
 
 Install DeepSpeech examples including the microphone example and dependencies.
@@ -47,7 +51,7 @@ Install DeepSpeech examples including the microphone example and dependencies.
 ```
 git clone https://github.com/mozilla/DeepSpeech-examples
 pip3 install halo webrtcvad --upgrade
-python3 DeepSpeech-examples/mic_vad_streaming/mic_vad_streaming.py --device 1 -m deepspeech-0.8.2-models.tflite -s deepspeech-0.8.2-models.scorer
+python3 DeepSpeech-examples/mic_vad_streaming/mic_vad_streaming.py --device 1 -m deepspeech-0.9.1-models.tflite -s deepspeech-0.9.1-models.scorer
 ```
 
 ## Links
